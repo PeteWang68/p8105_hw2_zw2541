@@ -12,9 +12,22 @@ library(tidyverse)
 
 # Problem 1
 
-## Import the NYC Transit data
+## Read and clean the data
 ```{r}
 transit_data = read_csv(file = "./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  select(line, station_name, station_latitude, station_longitude, starts_with("route"), entry, vending, entrance_type, ada) %>% 
+  mutate(entry = ifelse(entry == "YES", TRUE, FALSE))
+transit_data
 ```
 
+This dataset contains such variables: "line", "station name", "station latitude", "stantion longitude", "route1" to "route11", "entry", "vending", "entrance type" and "ADA compliance".
+
+My data cleaning step:
+
+*   Import the dataset
+*   Clean the names
+*   Select the variables I'm interested in 
+*   Use the ifelse function to convert the entry variable from character to a logical variable
+
+This dataset contains `r nrow(transit_data)` rows and `r ncol(transit_data)` columns. And these data are not tidy.
