@@ -1,0 +1,12 @@
+---
+title: "p8105_hw2_zw2541"
+author: "Zixu_Wang"
+date: "9/30/2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
