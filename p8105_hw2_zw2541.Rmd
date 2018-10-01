@@ -122,3 +122,11 @@ precip_2017 = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", s
   mutate(year = "2017")
 ```
 
+* Combine datasets and convert month to a character variable
+```{r}
+precip_data = bind_rows(precip_2016, precip_2017) %>% 
+  mutate(month = month.name[month]) %>% 
+  select(year, everything())
+precip_data
+```
+
