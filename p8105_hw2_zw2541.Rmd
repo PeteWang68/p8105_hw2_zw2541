@@ -8,6 +8,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(readxl)
 ```
 
 # Problem 1
@@ -31,3 +32,11 @@ My data cleaning step:
 *   Use the ifelse function to convert the entry variable from character to a logical variable
 
 This dataset contains `r nrow(transit_data)` rows and `r ncol(transit_data)` columns. And these data are not tidy.
+
+## Question 1
+How many distinct stations are there? 
+```{r}
+distinct_stations = distinct(transit_data, station_name, line) 
+nrow(distinct_stations)
+```
+
