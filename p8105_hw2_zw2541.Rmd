@@ -14,10 +14,10 @@ library(readxl)
 # Problem 1
 
 ## Read and clean the data
-```{r}
+```{r, message = FALSE}
 transit_data = read_csv(file = "./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
   janitor::clean_names() %>% 
-  select(line, station_name, station_latitude, station_longitude, starts_with("route"), entry, vending, entrance_type, ada) %>% 
+  select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada) %>% 
   mutate(entry = ifelse(entry == "YES", TRUE, FALSE))
 transit_data
 ```
@@ -33,16 +33,16 @@ My data cleaning step:
 
 This dataset contains `r nrow(transit_data)` rows and `r ncol(transit_data)` columns. And these data are not tidy.
 
-## Question 1
-How many distinct stations are there? 
+## Questions
+
+* How many distinct stations are there? 
 ```{r}
 distinct_stations = distinct(transit_data, station_name, line, .keep_all = T) 
 nrow(distinct_stations)
 ```
 There are 465 distinct stations.
 
-## Question 2
-How many stations are ADA compliant?
+* How many stations are ADA compliant?
 ```{r}
 distinct_stations %>% 
   filter(ada == T) %>% 
@@ -50,8 +50,7 @@ distinct_stations %>%
 ```
 84 stations are ADA compliant.
 
-## Question 3
-What proportion of station entrances / exits without vending allow entrance?
+* What proportion of station entrances / exits without vending allow entrance?
 
 If we only count the distinct stations, the propotion of station entrances / exits without vending allow entrance is
 ```{r}
@@ -100,10 +99,11 @@ Therefore, 17 of the stations that serve the A train are ADA compliant.
 
 * Read and clean the Mr. Trash Wheel sheet.
 ```{r}
-Wheel_data = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 1, range = "A2:N258") %>% 
+wheel_data = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 1, range = "A2:N258") %>% 
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>% 
   mutate(sports_balls = as.integer(round(sports_balls, 0)))
+wheel_data
 ```
 
 * Read and clean precipitation data for 2016.
@@ -128,5 +128,43 @@ precip_data = bind_rows(precip_2016, precip_2017) %>%
   mutate(month = month.name[month]) %>% 
   select(year, everything())
 precip_data
+```
+
+## Describe the datasets
+
+The dataset "wheel_data" contains the data from the first sheet of the "HealthyHarborWaterWheelTotals2017-9-26.xlsx" file. This data has `r nrow(wheel_data)` rows, `r ncol(wheel_data)` columns and 215 observations. Besides, this dataset has 14 variables. Taking "weight_tons" as an example, dumpster1 collected 4.31 tons of trash on May 16th, 2014.
+
+The dataset "precip_data" combines the data from the third and forth sheet of the "HealthyHarborWaterWheelTotals2017-9-26.xlsx" file. This data has `r nrow(precip_data)` rows, `r ncol(precip_data)` colums and 20 observations. Besides, this dataset has 3 variables. For example, the total precipetation in January 2016 is 3.23.
+
+## Questions
+
+* What was the total precipitation in 2017?
+```{r}
+sum(precip_2017$total)
+```
+The total precipitation in 2017 is 29.93.
+
+* What was the median number of sports balls in a dumpster in 2016?
+```{r}
+median(filter(wheel_data, year == "2016")$sports_balls)
+```
+In 2016, the median number of sports balls in a dumspter is 26.
+
+# Problem3
+
+## Read and clean the data
+```{r}
+library(p8105.datasets)
+
+data("brfss_smart2010")
+
+brfss_smart2010_tidy = brfss_smart2010 %>% 
+  janitor::clean_names() %>% 
+  filter(topic == "Overall Health") %>% 
+  select(-class, -topic, -question, -sample_size, -(confidence_limit_low:geo_location)) %>% 
+  spread(key = response, value = data_value) %>% 
+  janitor::clean_names() %>% 
+  mutate(excellent_verygood = excellent + very_good) 
+brfss_smart2010_tidy
 ```
 
