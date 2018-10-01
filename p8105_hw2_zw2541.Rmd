@@ -36,7 +36,17 @@ This dataset contains `r nrow(transit_data)` rows and `r ncol(transit_data)` col
 ## Question 1
 How many distinct stations are there? 
 ```{r}
-distinct_stations = distinct(transit_data, station_name, line) 
+distinct_stations = distinct(transit_data, station_name, line, .keep_all = T) 
 nrow(distinct_stations)
 ```
+
+## Question 2
+How many stations are ADA compliant?
+```{r}
+distinct_stations %>% 
+  filter(ada == T) %>% 
+  nrow()
+```
+
+
 
