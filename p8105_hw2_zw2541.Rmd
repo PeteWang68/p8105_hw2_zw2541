@@ -56,7 +56,7 @@ If we only count the distinct stations, the propotion of station entrances / exi
 ```{r}
 distinct_stations %>% 
   filter(vending == "NO", entry == "TRUE") %>% 
-  nrow() / nrow(filter(transit_data, vending == "NO"))
+  nrow() / nrow(filter(distinct_stations, vending == "NO"))
 ```
 
 If we count all of the stations (different entrances of the same unique station as difference stations), the propotion of station entrances / exits without vending allow entrance is
