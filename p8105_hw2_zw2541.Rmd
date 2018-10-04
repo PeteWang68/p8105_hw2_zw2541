@@ -99,7 +99,7 @@ Therefore, 17 of the stations that serve the A train are ADA compliant.
 
 * Read and clean the Mr. Trash Wheel sheet.
 ```{r}
-wheel_data = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 1, range = "A2:N258") %>% 
+wheel_data = read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 1, range = "A2:N338") %>% 
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>% 
   mutate(sports_balls = as.integer(round(sports_balls, 0)))
@@ -108,7 +108,7 @@ wheel_data
 
 * Read and clean precipitation data for 2016.
 ```{r}
-precip_2016 = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 4, range = "A2:B14") %>% 
+precip_2016 = read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 5, range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   filter(!is.na(total)) %>% 
   mutate(year = "2016")
@@ -116,7 +116,7 @@ precip_2016 = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", s
 
 * Read and clean precipitation data for 2017
 ```{r}
-precip_2017 = read_excel("./data/HealthyHarborWaterWheelTotals2017-9-26.xlsx", sheet = 3, range = "A2:B14") %>% 
+precip_2017 = read_excel("./data/HealthyHarborWaterWheelTotals2018-7-28.xlsx", sheet = 4, range = "A2:B14") %>% 
   janitor::clean_names() %>% 
   filter(!is.na(total)) %>% 
   mutate(year = "2017")
@@ -132,9 +132,9 @@ precip_data
 
 ## Describe the datasets
 
-The dataset "wheel_data" contains the data from the first sheet of the "HealthyHarborWaterWheelTotals2017-9-26.xlsx" file. This data has `r nrow(wheel_data)` rows, `r ncol(wheel_data)` columns and 215 observations. Besides, this dataset has 14 variables. Taking "weight_tons" as an example, dumpster1 collected 4.31 tons of trash on May 16th, 2014.
+The dataset "wheel_data" contains the data from the first sheet of the "HealthyHarborWaterWheelTotals2018-7-28.xlsx" file. This data has `r nrow(wheel_data)` rows, `r ncol(wheel_data)` columns and `r nrow(wheel_data)` observations. Besides, this dataset has `r ncol(wheel_data)` variables. Taking "weight_tons" as an example, dumpster1 collected 4.31 tons of trash on May 16th, 2014.
 
-The dataset "precip_data" combines the data from the third and forth sheet of the "HealthyHarborWaterWheelTotals2017-9-26.xlsx" file. This data has `r nrow(precip_data)` rows, `r ncol(precip_data)` colums and 20 observations. Besides, this dataset has 3 variables. For example, the total precipetation in January 2016 is 3.23.
+The dataset "precip_data" combines the data from the forth and fifth sheet of the "HealthyHarborWaterWheelTotals2018-7-28.xlsx" file. This data has `r nrow(precip_data)` rows, `r ncol(precip_data)` colums and `r nrow(precip_data)` observations. Besides, this dataset has `r ncol(precip_data)` variables. For example, the total precipetation in January 2016 is 3.23.
 
 ## Questions
 
@@ -142,7 +142,7 @@ The dataset "precip_data" combines the data from the third and forth sheet of th
 ```{r}
 sum(precip_2017$total)
 ```
-The total precipitation in 2017 is 29.93.
+The total precipitation in 2017 is 32.93.
 
 * What was the median number of sports balls in a dumpster in 2016?
 ```{r}
